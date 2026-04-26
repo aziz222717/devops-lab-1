@@ -1,20 +1,42 @@
 pipeline {
     agent any
+
     stages {
-        stage('Сәлемдесу') {
+        stage('Checkout') {
             steps {
-                echo 'Сәлем! Jenkins сәтті жұмыс істеп тұр!'
+                echo 'Код GitHub-тан алынды'
+                checkout scm
             }
         }
-        stage('Тексеру') {
+
+        stage('Build') {
             steps {
-                echo 'Код тексерілуде...'
+                echo 'Build басталды'
+                sh 'echo Building project...'
             }
         }
-        stage('Кибернет') {
+
+        stage('Test') {
             steps {
-                echo 'Жоба сәтті аяқталды!'
+                echo 'Тест жүргізілуде'
+                sh 'echo Testing...'
             }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo 'Deploy орындалды'
+                sh 'echo Deploying...'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'SUCCESS ✅'
+        }
+        failure {
+            echo 'ERROR ❌'
         }
     }
 }
